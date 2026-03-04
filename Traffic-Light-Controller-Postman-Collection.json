@@ -1,134 +1,134 @@
 {
-    "info": {
-        "name": "Traffic Light Controller API",
-        "_postman_id": "traffic-light-controller-collection",
-        "description": "Postman collection for testing Traffic Light Controller API",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-        {
-            "name": "Create Intersection",
-            "request": {
-                "method": "POST",
-                "url": {
-                    "raw": "http://localhost:8080/traffic/create/int1",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "traffic",
-                        "create",
-                        "int1"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "Change Light - NORTH_SOUTH GREEN",
-            "request": {
-                "method": "POST",
-                "url": {
-                    "raw": "http://localhost:8080/traffic/int1/change?direction=NORTH_SOUTH&color=GREEN",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "traffic",
-                        "int1",
-                        "change"
-                    ],
-                    "query": [
-                        {
-                            "key": "direction",
-                            "value": "NORTH_SOUTH"
-                        },
-                        {
-                            "key": "color",
-                            "value": "GREEN"
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "name": "Pause Intersection",
-            "request": {
-                "method": "POST",
-                "url": {
-                    "raw": "http://localhost:8080/traffic/int1/pause",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "traffic",
-                        "int1",
-                        "pause"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "Resume Intersection",
-            "request": {
-                "method": "POST",
-                "url": {
-                    "raw": "http://localhost:8080/traffic/int1/resume",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "traffic",
-                        "int1",
-                        "resume"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "Get State",
-            "request": {
-                "method": "GET",
-                "url": {
-                    "raw": "http://localhost:8080/traffic/int1/state",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "traffic",
-                        "int1",
-                        "state"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "Get History",
-            "request": {
-                "method": "GET",
-                "url": {
-                    "raw": "http://localhost:8080/traffic/int1/history",
-                    "protocol": "http",
-                    "host": [
-                        "localhost"
-                    ],
-                    "port": "8080",
-                    "path": [
-                        "traffic",
-                        "int1",
-                        "history"
-                    ]
-                }
-            }
+  "info": {
+    "name": "Traffic Light Controller API - v1",
+    "_postman_id": "d8c8b5a3-traffic-v1",
+    "description": "Enterprise Traffic Light Controller API (Version 1)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Intersection",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/traffic/int1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "traffic", "int1"]
         }
-    ]
+      }
+    },
+    {
+      "name": "Set NORTH_SOUTH GREEN",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"direction\": \"NORTH_SOUTH\",\n  \"color\": \"GREEN\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/traffic/int1/lights",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "traffic", "int1", "lights"]
+        }
+      }
+    },
+    {
+      "name": "Set EAST_WEST GREEN (Conflict Expected)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"direction\": \"EAST_WEST\",\n  \"color\": \"GREEN\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/traffic/int1/lights",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "traffic", "int1", "lights"]
+        }
+      }
+    },
+    {
+      "name": "Get Current Lights State",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/traffic/int1/lights",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "traffic", "int1", "lights"]
+        }
+      }
+    },
+    {
+      "name": "Get History",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/traffic/int1/history",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "traffic", "int1", "history"]
+        }
+      }
+    },
+    {
+      "name": "Pause Intersection",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/traffic/int1/pause",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "traffic", "int1", "pause"]
+        }
+      }
+    },
+    {
+      "name": "Resume Intersection",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/traffic/int1/resume",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "traffic", "int1", "resume"]
+        }
+      }
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/actuator/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["actuator", "health"]
+        }
+      }
+    }
+  ]
 }

@@ -5,6 +5,8 @@ import com.example.traffic.model.*;
 import com.example.traffic.repository.TrafficLightRepository;
 import com.example.traffic.exception.*;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
@@ -41,7 +43,7 @@ public class TrafficLightService {
  public void pause(String id){ validate(id); paused.put(id,true); }
  public void resume(String id){ validate(id); paused.put(id,false); }
  public Map<Direction,TrafficLightState> getState(String id){ validate(id); return repo.getState(id); }
- public Object getHistory(String id){ validate(id); return repo.getHistory(id); }
+ public List<TrafficLightState> getHistory(String id){ validate(id); return repo.getHistory(id); }
 
  private void validate(String id){
    if(!repo.exists(id)) throw new IntersectionNotFoundException("Not found "+id);

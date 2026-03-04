@@ -1,4 +1,3 @@
-
 package com.example.traffic;
 
 import org.junit.jupiter.api.Test;
@@ -14,19 +13,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class TrafficLightIntegrationTest {
 
- @Autowired
- private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
- @Test
- void fullFlowTest() throws Exception{
-   mockMvc.perform(post("/traffic/create/int1")).andExpect(status().isOk());
+    @Test
+    void fullFlowTest() throws Exception {
 
-   mockMvc.perform(post("/traffic/int1/change")
-     .param("direction","NORTH_SOUTH")
-     .param("color","GREEN")).andExpect(status().isOk());
+        // 1️⃣ Create intersection
+        mockMvc.perform(post("/api/v1/traffic/int1"))
+                .andExpect(status().isOk());
 
-   mockMvc.perform(post("/traffic/int1/change")
-     .param("direction","EAST_WEST")
-     .param("color","GREEN")).andExpect(status().isConflict());
- }
+        // 2️⃣ Set NORTH_SOUTH to GREEN
+        mockMvc.perform(post("/api/v1/traffic/int1/lights")
+                        .contentType("application/json")
+                        .content("""
+                                {
+                                  "direction": "NORTH_SOUTH",
+                                  "color": "GREEN"
+                                }
+                                """))
+                .andExpect(status().isOk());
+
+        // 3️⃣ Try setting EAST_WEST to GREEN (should conflict)
+        mockMvc.perform(post("/api/v1/traffic/int1/lights")
+                        .contentType("application/json")
+                        .content("""
+                                {
+                                  "direction": "EAST_WEST",
+                                  "color": "GREEN"
+                                }
+                                """))
+                .andExpect(status().isConflict());
+    }
 }
